@@ -12,7 +12,7 @@ const balanceFile = "balance.txt"
 func writeBalanceToFile(balance float64) {
 	balanceText := fmt.Sprint(balance)
 
-	os.WriteFile(balanceFile, []byte(balanceText), 644)
+	os.WriteFile(balanceFile, []byte(balanceText), 0644)
 }
 
 func getBalanceFromFile() (float64, error) {
@@ -20,12 +20,12 @@ func getBalanceFromFile() (float64, error) {
 	amountAsString := string(byteData)
 
 	if err != nil {
-		return 1000, errors.New("Failed to find balance file.")
+		return getDefaultBalanceAndError("failed to find balance file")
 	}
 
 	balance, err := strconv.ParseFloat(amountAsString, 64)
 	if err != nil {
-		return 1000, errors.New("Failed to parse stored balance value.")
+		return getDefaultBalanceAndError("failed to parse stored balance value")
 	}
 	return balance, nil
 }
@@ -110,4 +110,10 @@ func withdrawlFunds(originalBalance float64) float64 {
 
 func formatMoney(moneyAmount float64) string {
 	return fmt.Sprintf("$%.2f", moneyAmount)
+}
+
+func getDefaultBalanceAndError(errorMessage string) (defaultBalance float64, err error) {
+	err = errors.New(errorMessage)
+	defaultBalance = 1000
+	return
 }
