@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"example.com/bank/fileHandler"
+	"github.com/Pallinder/go-randomdata"
 )
 
 const balanceFile = "balance.txt"
@@ -19,6 +20,7 @@ func main() {
 	var choice int
 
 	fmt.Println("Welcome to Go Bank!")
+	fmt.Println(randomdata.PhoneNumber())
 
 interfaceLoop:
 	for {
